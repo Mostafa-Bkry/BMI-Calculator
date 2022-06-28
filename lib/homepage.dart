@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:bmi_app/bmi_result_screen.dart';
 import 'package:flutter/material.dart';
 
 class BMIScreen extends StatefulWidget {
@@ -9,9 +12,11 @@ class BMIScreen extends StatefulWidget {
 
 class _BMIScreenState extends State<BMIScreen> {
   bool isMale = true;
-  double sliderValue = 120;
+  double height = 120;
   int weight = 60;
   int age = 22;
+  String gender = 'Male';
+  double result = 55;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +42,7 @@ class _BMIScreenState extends State<BMIScreen> {
                     onTap: () {
                       setState(() {
                         isMale = true;
+                        gender = 'Male';
                       });
                     },
                     child: Card(
@@ -78,6 +84,7 @@ class _BMIScreenState extends State<BMIScreen> {
                     onTap: () {
                       setState(() {
                         isMale = false;
+                        gender = 'Female';
                       });
                     },
                     child: Card(
@@ -146,7 +153,7 @@ class _BMIScreenState extends State<BMIScreen> {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         Text(
-                          '${sliderValue.round()}',
+                          '${height.round()}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 50,
@@ -170,12 +177,12 @@ class _BMIScreenState extends State<BMIScreen> {
                       ],
                     ),
                     Slider(
-                      value: sliderValue,
+                      value: height,
                       max: 220,
                       min: 80,
                       onChanged: (value) {
                         setState(() {
-                          sliderValue = value;
+                          height = value;
                         });
                         //print(value.round());
                       },
@@ -238,6 +245,7 @@ class _BMIScreenState extends State<BMIScreen> {
                               onPressed: () => setState(() {
                                 weight--;
                               }),
+                              heroTag: 'weight--',
                               mini: true,
                               backgroundColor: Colors.white54,
                             ),
@@ -252,6 +260,7 @@ class _BMIScreenState extends State<BMIScreen> {
                               onPressed: () => setState(() {
                                 weight++;
                               }),
+                              heroTag: 'weight++',
                               mini: true,
                               backgroundColor: Colors.white54,
                             ),
@@ -312,6 +321,7 @@ class _BMIScreenState extends State<BMIScreen> {
                               onPressed: () => setState(() {
                                 age--;
                               }),
+                              heroTag: 'age--',
                               mini: true,
                               backgroundColor: Colors.white54,
                             ),
@@ -326,6 +336,7 @@ class _BMIScreenState extends State<BMIScreen> {
                               onPressed: () => setState(() {
                                 age++;
                               }),
+                              heroTag: 'age++',
                               mini: true,
                               backgroundColor: Colors.white54,
                             ),
@@ -354,7 +365,22 @@ class _BMIScreenState extends State<BMIScreen> {
                     ),
                   ),
                 ),
-                onPressed: () => print('Calculate'),
+                onPressed: () {
+                  setState(() {
+                    result = weight / pow(height / 100, 2);
+                    //print(result.round());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BMIResultScreen(
+                          gender: gender,
+                          result: result,
+                          age: age,
+                        ),
+                      ),
+                    );
+                  });
+                },
                 child: const Text(
                   'Calculate',
                   style: TextStyle(
