@@ -8,7 +8,8 @@ class BMIScreen extends StatefulWidget {
 }
 
 class _BMIScreenState extends State<BMIScreen> {
-  double sliderValue = 120.0;
+  bool isMale = true;
+  double sliderValue = 120;
   int weight = 60;
   int age = 22;
 
@@ -32,70 +33,84 @@ class _BMIScreenState extends State<BMIScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    color: Colors.black,
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.male,
-                          size: 100,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'MALE',
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                            fontSize: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isMale = true;
+                      });
+                    },
+                    child: Card(
+                      clipBehavior: Clip.hardEdge,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      color: isMale ? Colors.blue[900] : Colors.black,
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.male,
+                            size: 100,
+                            color: Colors.white,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                          Text(
+                            'MALE',
+                            style: TextStyle(
+                              color: Colors.grey[300],
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    color: Colors.black,
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.female,
-                          size: 100,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'FEMALE',
-                          style: TextStyle(
-                            color: Colors.grey[300],
-                            fontSize: 20,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isMale = false;
+                      });
+                    },
+                    child: Card(
+                      clipBehavior: Clip.hardEdge,
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                      ),
+                      color: !isMale ? Colors.blue[900] : Colors.black,
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.female,
+                            size: 100,
+                            color: Colors.white,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                          Text(
+                            'FEMALE',
+                            style: TextStyle(
+                              color: Colors.grey[300],
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -130,9 +145,9 @@ class _BMIScreenState extends State<BMIScreen> {
                       crossAxisAlignment: CrossAxisAlignment.baseline,
                       textBaseline: TextBaseline.alphabetic,
                       children: [
-                        const Text(
-                          '180',
-                          style: TextStyle(
+                        Text(
+                          '${sliderValue.round()}',
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
@@ -162,7 +177,7 @@ class _BMIScreenState extends State<BMIScreen> {
                         setState(() {
                           sliderValue = value;
                         });
-                        print(value.round());
+                        //print(value.round());
                       },
                       activeColor: Colors.white,
                     ),
